@@ -1,68 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Note Taker</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/flatly/bootstrap.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Note Taker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/flatly/bootstrap.min.css" />
 </head>
-
 <body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="./assets/js/index.js"></script>
-  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-
-<div class="container">
-
-  <div class="jumbotron">
-    
-
-    <h1 class="text-center"><span class=""><i class='fas fa-edit' style='font-size:48px;color:green'></i></span> Note Taker</h1>
-    <hr>
-    
-    <div class="text-center">
-      <a href="/index"><button class="btn btn-lg btn-primary">Write Notes</button></a>
-      <a href="/notes"><button class="btn btn-lg btn-danger"> View Notes</button></a>
-    </div>
-    <div class= "text-right">
-    <button type="button" class="btn btn-light" id = "list-container"><i class='fas fa-list' style='font-size:48px;color:blue'></i></button>
-    <button type="button" class="btn btn-light" id = "new-note"><i class='far fa-file' style='font-size:48px;color:orangered'></i></button>
-    <button type="button" class="btn btn-light" id = "save-note"><i class='far fa-save' style='font-size:48px;color:green'></i></button>
-    <button type="button" class="btn btn-light" id ="update-note"><i class="far fa-edit" style='font-size:48px;color:red'></i></button> 
-     
-    <button type="button" class="btn btn-light" id = "delete-note"><i class="fas fa-trash" style='font-size:48px;color:black'></i></button>
-    
-</div>
-
-  </div>
-  <div class = "notes-title">
-  <form>
-    <div class="form-group">
-      <label for="Id">ID</label>
-      <input type="text" class="form-control" id ="note-id">
-    </div>
-    <div class="form-group">
-      <label for="Title">Title</label>
-      <input type="text" class="form-control" id ="note-title"  placeholder="Enter Title for Note">
-    </div>
-    <div class="form-group">
-      <label for="note-text">Text</label>
-      <textarea type="text" class="form-control" id="note-area">   </textarea>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  
+  <div class="container">
+  
+    <div class="jumbotron">
+      
+  
+      <h1 class="text-center"><span class=""><i class='fas fa-edit' style='font-size:48px;color:green'></i></span> Note Taker</h1>
+      <hr>
+      
+      <div class="text-center">
+        <a href="/index"><button class="btn btn-lg btn-primary">Write Notes</button></a>
+        <a href="/notes"><button class="btn btn-lg btn-danger"> View Notes</button></a>
       </div>
-
-    
-  </form>
-    
+      <div class= "text-right">
+      <button type="button" class="btn btn-light" id = "list-container"><i class='fas fa-list' style='font-size:48px;color:blue'></i></button>
+      <button type="button" class="btn btn-light" id = "new-note"><i class='far fa-file' style='font-size:48px;color:orangered'></i></button>
+      <button type="button" class="btn btn-light" id = "save-note"><i class='far fa-save' style='font-size:48px;color:green'></i></button>
+      <button type="button" class="btn btn-light" id ="update-note"><i class="far fa-edit" style='font-size:48px;color:red'></i></button> 
+       
+      <button type="button" class="btn btn-light" id = "delete-note"><i class="fas fa-trash" style='font-size:48px;color:black'></i></button>
+      
   </div>
-  <footer class="footer">
-    <div class="container">
-      <p><a href="/api/notes">API notes Link</a>
+  
     </div>
-  </footer>
+    <div class = "notes-title">
+    <form>
+      <div class="form-group">
+        <label for="Id">ID</label>
+        <input type="text" class="form-control" id ="note-id">
+      </div>
+      <div class="form-group">
+        <label for="Title">Title</label>
+        <input type="text" class="form-control" id ="note-title"  placeholder="Enter Title for Note">
+      </div>
+      <div class="form-group">
+        <label for="note-text">Text</label>
+        <textarea type="text" class="form-control" id="note-area">   </textarea>
+        </div>
+  
+      
+    </form>
+      
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p><a href="/api/notes">API notes Link</a></p>
+      </div>
+    </footer>
+  
+  </div>
+  <!-- <script src="./assets/js/index.js"></script> -->
+  <script type= "text/javascript">
 
-</div>
+      var $noteTitle = $("#note-title");
+      var $noteText = $("#note-area");
+      var $saveNoteBtn = $("#save-note");
+      var $newNoteBtn = $("#new-note");
+      var $noteList = $("#list-container");
+      var $deleteNote = $("#delete-note");
+      var $noteId = $("#noteId");
+// Function get a data from database 
+    var getsData = function(){
+    $.get("./api",notesData, function(req,res){
+      res.result;
+      
+    })
+  }
+
+
+
+
+      var handleNoteSave = function () {
+        console.log("hi");
+
+                alert("save button clicked");               
+            
+                var saveNote = {
+                title: $noteTitle.val(),
+                text: $noteText.val()
+                }
+              
+                $.post("/api/notes", saveNote, function (req, res) {
+
+                console.log(saveNote);
+
+                notesData.push(saveNote);
+
+                res.json(saveNote);
+                });
+
+              }
+     // Function to open new note-taker
+    var handleNewNoteView = function () {
+                alert("You open a new note");
+                $noteTitle.val("")
+                $noteText.val("");
+
+      };
+          
+          
+                $saveNoteBtn.on("click", handleNoteSave);
+                $newNoteBtn.on("click", handleNewNoteView);
+                $noteList.on("click", getsData);
+
+
+        
+
+
+  </script>
 </body>
-
 </html>

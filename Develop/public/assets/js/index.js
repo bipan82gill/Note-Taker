@@ -1,149 +1,100 @@
 var $noteTitle = $("#note-title");
-var $noteText = $("#note-textarea");
+var $noteText = $("#note-area");
 var $saveNoteBtn = $("#save-note");
 var $newNoteBtn = $("#new-note");
-var $noteList = $("#list-container #list-group");
-
-// activeNote is used to keep track of the note in the textarea
-var activeNote = {};
+var $noteList = $("#list-container");
+var $deleteNote = $("#delete-note");
+var $noteId = $("#noteId");
 
 // A function for getting all notes from the db
-var getNotes = function() {
-  $.ajax({
-    url:"api/notes", method:"GET"
-  }).then(function(notesData){
+function getNotes() {
+  // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+  $.ajax({ url: "/api/notes", method: "GET" })
+    .then(function (notesData) {
 
-   $("notes-title").append($("<ul/>").addClass("notes-list"));
-   
-    for (var i =0;i<length.notesData; i++){
-      $("<li>").text(notesData[i].title).appendTo("ul");
-
-    }
-
-  });
-  
-}
-
-// A function for saving a note to the db
-var saveNote = function(note) {
-{ title = $noteTitle.val().trim();
- text = $noteText.val().trim();
-}
-console.log()
-$.post("/api/notes", SaveNote,
-      function(data) {
-
-      
-        if (data) {
-          alert("Yay! You saved your data!");
-        }
-
-      
-        else {
-          alert("Sorry you are unable to save");
-        }
-
-    
-        
-
-      });
-
-  
-};
-
-// app.post("/api/notes", function(req, res) {
-//   var newNote = req.body;
-
-//   console.log(newNote);
-
-//   NotesData.push(newNote);
-
-//   res.json(newNote);
-// });
-
-// A function for deleting a note from the db
-var deleteNote = function(title) {
-  app.get('/api/notes/:id',(req,res)=>{
-    var chosen = req.param.notesData.id;    
-      console.log(chosen);
-      var deletedItem = notesData.splice(1,1);
+      // Here we then log the tableData to console, where it will show up as an object.
       console.log(notesData);
+      console.log("------------------------------------");
 
-        });
+      // Loop through and display each of the customers
+      for (var i = 0; i < notesData.length; i++) {
+
+        // Get a reference to the tableList element and populate it with tables
+        //   var $noteList = $("#list-container");
+
+        // Then display the fields in the HTML (Section Name, Date, URL)
+        var listItem = $("<li class='list-group-item mt-4'>");
+
+        listItem.append(
+          $("<h2>").text("Note #" + (i + 1)),
+          $("<hr>"),
+          $("<h2>").text("ID: " + notesData[i].id),
+          $("<h2>").text("Title: " + notesData[i].Title),
+          $("<h2>").text("Text: " + notesData[i].Text)
+        );
+
+        $noteList.append(listItem);
       }
-
-// If there is an activeNote, display it, otherwise render empty inputs
-var renderActiveNote = function() {
-  
-};
+    });
+}
 
 // Get the note data from the inputs, save it to the db and update the view
-var handleNoteSave = function() {
-  var i =$note-id.val().trim();
-  i++;
- var saveNote= 
- { 
-   id : i,
-  title = $noteTitle.val().trim(),
-    text = $noteText.val().trim()
-   }
-   console.log(saveNote);
-   $.post("/api/notes", SaveNote,
-         function(data) {
-   
-         
-           if (data) {
-             alert("Yay! You saved your data!");
-           }
-   
-         
-           else {
-             alert("Sorry you are unable to save");
-           }
-   
-          });
-        }
+var handleNoteSave = function () {
+  debugger;
+  alert("save button clicked");
+  lastNoteId = notesData.length + 1;
+
+  if (lastNoteId < 0) {
+   var id = 1;
+  }
+  else
+    id = lastNoteId;
+}
+
+var saveNote = {
+  ID: id,
+  title: $noteTitle.val(),
+  text: $noteText.val()
+}
+$.post("/api/notes", saveNote, function (req, res) {
+
+  //   var newNote = req.body;
+
+  console.log(saveNote);
+
+  notesData.push(saveNote);
+
+  res.json(saveNote);
+});
 
 
-// Delete the clicked note
-var handleNoteDelete = function(event) {
-  
+var handleNewNoteView = function () {
+  alert("You open a new note");
+  $noteTitle.val("")
+  $noteText.val("");
+
 };
 
-// Sets the activeNote and displays it
-var handleNoteView = function() {
-  
-};
 
-// Sets the activeNote to and empty object and allows the user to enter a new note
-var handleNewNoteView = function() {
-  $("#noteTitle").val("");
-  $("#noteText").val("");
-  
-};
+var deleteNote = function (title) {
 
-// If a note's title or text are empty, hide the save button
-// Or else show it
-var handleRenderSaveBtn = function() {
-  
-};
+  alert("Do you want to delete this note")
+  $.delete("/api/notes/:id", function (req, res) {
+    console.log(req.params);
 
-// Render's the list of note titles
-var renderNoteList = function(notes) {
-  
-};
 
-// Gets notes from the db and renders them to the sidebar
-var getAndRenderNotes = function() {
-  
-};
+    // get the db - notesData
+    $($noteList, listItem).on('click', function (e) {
+      req.params.id = ($(this).index());
+      var idToTrash = req.params.id;
+      notesData.splice(deleted, 1);
 
+    });
+  });
+}
+
+$noteList.on("click", getNotes);
+$deleteNote.on("click", deleteNote);
 $saveNoteBtn.on("click", handleNoteSave);
-$noteList.on("click", ".list-group-item", handleNoteView);
 $newNoteBtn.on("click", handleNewNoteView);
-$noteList.on("click", ".delete-note", handleNoteDelete);
-$noteTitle.on("keyup", handleRenderSaveBtn);
-$noteText.on("keyup", handleRenderSaveBtn);
 
-// Gets and renders the initial list of notes
-getAndRenderNotes();

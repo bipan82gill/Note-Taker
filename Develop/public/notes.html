@@ -7,50 +7,170 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Note Taker</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/flatly/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
 <body>
+
+  <div class="container">
+
+    <div class="jumbotron">
+
+
+      <h1 class="text-center"><span class=""><i class='fas fa-edit' style='font-size:48px;color:green'></i></span> Note
+        Taker</h1>
+      <hr>
+
+      <div class="text-center">
+        <a href="/index"><button class="btn btn-lg btn-primary">WriteNotes</button></a>
+        <a href="/notes"><button class="btn btn-lg btn-danger"> View Note</button></a>
+      </div>
+
+      <div class="text-right">
+        <button type="button" class="btn btn-light" id="list-container"></button><i class='fas fa-list'
+          style='font-size:48px;color:blue'></i></button>
+        <button type="button" class="btn btn-light" id="new-note"></button><i class='far fa-file'
+          style='font-size:48px;color:orangered'></i></button>
+        <button type="button" class="btn btn-light" id="save-note"></button><i class='far fa-save'
+          style='font-size:48px;color:green'></i></button>
+        <button type="button" class="btn btn-light" id="update-note"></button><i class="far fa-edit"
+          style='font-size:48px;color:red'></i></button>
+
+        <button type="button" class="btn btn-light" id="delete-note"></button><i class="fas fa-trash"
+          style='font-size:48px;color:black'></i></button>
+
+      </div>
+
+
+    </div>
+    <div class="notes-title">
+
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p><a href="/api/notes">API notes Link</a>
+      </div>
+    </footer>
+
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="/assets/js/index.js"></script>
+  <!-- <script src="/assets/js/index.js"></script> -->
   <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <!-- <script src="./assets/js/index.js"></script> -->
+  <script>
 
-<div class="container">
+    // console.log('i\'m working!!!!!!')
 
-  <div class="jumbotron">
-    
+    var $noteTitle = $("#note-title");
+    var $noteText = $("#note-area");
+    var $saveNoteBtn = $("#save-note");
+    var $newNoteBtn = $("#new-note");
+    var $noteList = $("#list-container");
+    var $deleteNote = $("#delete-note");
+    var $noteId = $("#noteId");
 
-    <h1 class="text-center"><span class=""><i class='fas fa-edit' style='font-size:48px;color:green'></i></span> Note Taker</h1>
-    <hr>
-    
-    <div class="text-center">
-      <a href="/index"><button class="btn btn-lg btn-primary">WriteNotes</button></a>
-      <a href="/notes"><button class="btn btn-lg btn-danger"> View Note</button></a>
-    </div>
+    // A function for getting all notes from the db
+    function getNotes() {
+      // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+      $.ajax({ url: "/api/notes", method: "GET" })
+        .then(function (notesData) {
 
-    <div class= "text-right">
-      <button type="button" class="btn btn-light"id = "list-container"></button><i class='fas fa-list' style='font-size:48px;color:blue'></i></button>
-      <button type="button" class="btn btn-light" id = "new-note"></button><i class='far fa-file' style='font-size:48px;color:orangered'></i></button>
-      <button type="button" class="btn btn-light" id = "save-note"></button><i class='far fa-save' style='font-size:48px;color:green'></i></button>
-      <button type="button" class="btn btn-light" id = "update-note"></button><i class="far fa-edit" style='font-size:48px;color:red'></i></button> 
-       
-      <button type="button" class="btn btn-light" id = "delete-note"></button><i class="fas fa-trash" style='font-size:48px;color:black'></i></button>
-      
-  </div>
+          // Here we then log the tableData to console, where it will show up as an object.
+          console.log(notesData);
+          console.log("------------------------------------");
+
+          // Loop through and display each of the customers
+          for (var i = 0; i < notesData.length; i++) {
+
+            // Get a reference to the tableList element and populate it with tables
+            //   var $noteList = $("#list-container");
+
+            // Then display the fields in the HTML (Section Name, Date, URL)
+            var listItem = $("<li class='list-group-item mt-4'>");
+
+            listItem.append(
+              $("<h2>").text("Note #" + (i + 1)),
+              $("<hr>"),
+              $("<h2>").text("ID: " + notesData[i].id),
+              $("<h2>").text("Title: " + notesData[i].Title),
+              $("<h2>").text("Text: " + notesData[i].Text)
+            );
+
+            $noteList.append(listItem);
+          }
+        });
+    }
+
+    // Get the note data from the inputs, save it to the db and update the view
+    var handleNoteSave = function () {
+      console.log('i\'m working!!!!!!')
+
+      // debugger;
+      alert("save button clicked");
+      noteId = notesData.length + 1;
+
+      if (noteId < 0) {
+        id = 1;
+      }
+      else {
+        id = noteId;
+
+      }
 
 
-  </div>
-  <div class = "notes-title">
+      var saveNote = {
+        ID: id,
+        title: $noteTitle.val(),
+        text: $noteText.val()
+      }
+      $.post("/api/notes", saveNote, function (req, res) {
 
-  </div>
-  <footer class="footer">
-    <div class="container">
-      <p><a href="/api/notes">API notes Link</a> 
-    </div>
-  </footer>
+        //   var newNote = req.body;
 
-</div>
+        console.log(saveNote);
+
+        notesData.push(saveNote);
+
+        res.json(saveNote);
+      });
+    }
+
+    var handleNewNoteView = function () {
+      alert("You open a new note");
+      $noteTitle.val("")
+      $noteText.val("");
+
+    };
+
+
+    var deleteNote = function (title) {
+
+      alert("Do you want to delete this note")
+      $.delete("/api/notes/:id", function (req, res) {
+        console.log(req.params);
+
+
+        // get the db - notesData
+        $($noteList, listItem).on('click', function (e) {
+          req.params.id = ($(this).index());
+          var idToTrash = req.params.id;
+          notesData.splice(deleted, 1);
+
+        });
+      });
+    }
+
+    $noteList.on("click", getNotes);
+    $deleteNote.on("click", deleteNote);
+    $saveNoteBtn.on("click", handleNoteSave);
+    $newNoteBtn.on("click", handleNewNoteView);
+
+
+
+  </script>
+  <!-- <script src="./assets/js/index.js"></script> -->
 </body>
+
 </html>
