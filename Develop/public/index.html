@@ -9,61 +9,54 @@
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-  
+  <!-- // Container to hold elements -->
   <div class="container">
   
     <div class="jumbotron">
-      
-  
+
       <h1 class="text-center"><span class=""><i class='fas fa-edit' style='font-size:48px;color:green'></i></span> Note Taker</h1>
       <hr>
-      
+  <!-- // Links to open Route Web pages     -->
       <div class="text-center">
         <a href="/index"><button class="btn btn-lg btn-primary">Write Notes</button></a>
         <a href="/notes"><button class="btn btn-lg btn-danger"> View Notes</button></a>
       </div>
+  <!-- //Buttons to open new note, save note -->
       <div class= "text-right">
+
       <button type="button" class="btn btn-light" id = "list-container"><i class='fas fa-list' style='font-size:48px;color:blue'></i></button>
       <button type="button" class="btn btn-light" id = "new-note"><i class='far fa-file' style='font-size:48px;color:orangered'></i></button>
       <button type="button" class="btn btn-light" id = "save-note"><i class='far fa-save' style='font-size:48px;color:green'></i></button>
       <button type="button" class="btn btn-light" id ="update-note"><i class="far fa-edit" style='font-size:48px;color:red'></i></button> 
-       
-      <button type="button" class="btn btn-light" id = "delete-note"><i class="fas fa-trash" style='font-size:48px;color:black'></i></button>
+      <button type = "button" class = "btn btn-light" id = "delete-note"><i class = "fas fa-trash" style='font-size:48px;color:black'></i></button>
       
-  </div>
+   <!-- // Form to submitting input of Note -->
+        <div class = "notes-title">
+        <form >
+        
+          <div class="form-group">
+            <label for="Title">Title</label>
+            <input type="text" class="form-control" id ="note-title"  placeholder="Enter Title for Note">
+          </div>
+          <div class="form-group">
+            <label for="note-text">Text</label>
+            <textarea type="text" class="form-control" id="note-area">   </textarea>
+            </div>
   
+        </form>
+    <!-- // API links to notes which are store in JSON -->
     </div>
-    <div class = "notes-title">
-    <form>
-      <div class="form-group">
-        <label for="Id">ID</label>
-        <input type="text" class="form-control" id ="note-id">
-      </div>
-      <div class="form-group">
-        <label for="Title">Title</label>
-        <input type="text" class="form-control" id ="note-title"  placeholder="Enter Title for Note">
-      </div>
-      <div class="form-group">
-        <label for="note-text">Text</label>
-        <textarea type="text" class="form-control" id="note-area">   </textarea>
-        </div>
-  
-      
-    </form>
-      
+        <footer class="footer">
+          <div class="container">
+            <p><a href="/api/notes">API notes Link</a></p>
+          </div>
+        </footer>
     </div>
-    <footer class="footer">
-      <div class="container">
-        <p><a href="/api/notes">API notes Link</a></p>
-      </div>
-    </footer>
-  
-  </div>
-  <!-- <script src="./assets/js/index.js"></script> -->
+  <!-- // Script tag  -->
   <script type= "text/javascript">
 
+  // button selectors 
       var $noteTitle = $("#note-title");
       var $noteText = $("#note-area");
       var $saveNoteBtn = $("#save-note");
@@ -71,53 +64,61 @@
       var $noteList = $("#list-container");
       var $deleteNote = $("#delete-note");
       var $noteId = $("#noteId");
+     var ulList=$("#notes-list-item");
+
 // Function get a data from database 
     var getsData = function(){
-    $.get("./api",notesData, function(req,res){
-      res.result;
-      
-    })
-  }
+    //api client request
+      $.get("/api/notes/" , function(data) {
+        console.log(data);
+    //append the ul list with notes-title
+          ulList.text("");
+          for (var i = 0; i < data.length; i++) {
+            var listItem = $("<li class='list-group-item mt-4'>");
 
-
-
-
+            listItem.append(
+              $("<h2>").text("Note #" + (i + 1)),
+              $("<i class = fas fa-trash></i>"),
+              $("<hr>"),
+              $("<h2>").text("Title: " + data[i].title),
+          );
+              ulList.append(listItem);
+        }
+      });
+    }
+    //Function to save note into json file
       var handleNoteSave = function () {
-        console.log("hi");
-
-                alert("save button clicked");               
+      
+            alert("save button clicked");               
             
                 var saveNote = {
                 title: $noteTitle.val(),
                 text: $noteText.val()
                 }
-              
+      //API request to POST data 
                 $.post("/api/notes", saveNote, function (req, res) {
 
                 console.log(saveNote);
-
                 notesData.push(saveNote);
-
                 res.json(saveNote);
                 });
+          }
 
-              }
      // Function to open new note-taker
-    var handleNewNoteView = function () {
+      var handleNewNoteView = function () {
                 alert("You open a new note");
+
                 $noteTitle.val("")
                 $noteText.val("");
-
       };
+      //Function to update a note
+    var updateNote = function(){
+
+    }
           
           
                 $saveNoteBtn.on("click", handleNoteSave);
                 $newNoteBtn.on("click", handleNewNoteView);
-                $noteList.on("click", getsData);
-
-
-        
-
 
   </script>
 </body>

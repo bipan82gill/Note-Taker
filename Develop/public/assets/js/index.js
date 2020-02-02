@@ -40,7 +40,7 @@ function getNotes() {
 
 // Get the note data from the inputs, save it to the db and update the view
 var handleNoteSave = function () {
-  debugger;
+
   alert("save button clicked");
   lastNoteId = notesData.length + 1;
 
