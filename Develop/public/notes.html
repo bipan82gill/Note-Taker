@@ -58,6 +58,7 @@
     var $deleteNote = $("#delete-note");
     var $noteId = $("#noteId");
    var ulList=$("#notes-list-item");
+   var $updateNote = $("#update-note");
 // Function get a data from database 
   var getsData = function(){
   
@@ -71,7 +72,7 @@
 
                     listItem.append(
                       $("<h2>").text("Note #" + (i + 1)),
-                      $("<i class = fas fa-trash></i>"),
+                      $( "<i class='fas fa-trash-alt float-right text-danger' style ='font-size:36px;'>"),
                       $("<hr>"),
                       $("<h2>").text("Title: " + data[i].title),
                 );
@@ -79,7 +80,28 @@
              }     
         });
         }
+  //Function to delete data
+//   $("$deleteNote").on("click", function(event) {
+    
+
+//      $.delete("/api/characters/:id", function(req, result) {
+//   var id = req.params.id;
+      
+//   console.log(id);
+
+//   for (var i = 0; i < result.length; i++) {
+//     if (id === result[i]) {
+//       deleteNote = result.splice(1,1);
+//       return res.json(result);
+//     }
+//   }
+
+// });
+   
+// });
         $noteList.on("click", getsData);
+        // $updateNote.on("click",updatedNote);
+        // $deleteNote.on("click",deleteNote);
 </script>
     
 </body>

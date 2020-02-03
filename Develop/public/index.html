@@ -30,7 +30,7 @@
       <button type="button" class="btn btn-light" id = "save-note"><i class='far fa-save' style='font-size:48px;color:green'></i></button>
       <button type="button" class="btn btn-light" id ="update-note"><i class="far fa-edit" style='font-size:48px;color:red'></i></button> 
       <button type = "button" class = "btn btn-light" id = "delete-note"><i class = "fas fa-trash" style='font-size:48px;color:black'></i></button>
-      
+      </div>
    <!-- // Form to submitting input of Note -->
         <div class = "notes-title">
         <form >
@@ -113,12 +113,13 @@
       };
       //Function to update a note
     var updateNote = function(){
-
+    
     }
           
           
                 $saveNoteBtn.on("click", handleNoteSave);
                 $newNoteBtn.on("click", handleNewNoteView);
+                $noteList.on("click", getsData);
 
   </script>
 </body>

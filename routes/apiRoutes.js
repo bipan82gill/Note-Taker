@@ -23,10 +23,7 @@ module.exports = function (app) {
     
   });
 
-  
- 
-  // ---------------------------------------------------------------------------
-
+  // API for post data into json
   app.post("/api/notes", function (req, res) {
     const note = req.body;
     notesData.push(note);
@@ -34,4 +31,16 @@ module.exports = function (app) {
     let data = JSON.stringify(notesData);
     fs.writeFile('../db/db.json', data);
 });  
+
+//API for update data into json
+app.put("/api/notes/:id",function(req,result){
+  var chosen = req.params.id;
+
+  console.log(chosen);
+    if (chosen === result[i].id) {
+      var data = JSON.stringify(req.body);
+      fs.writeFileSync("../Develop/db/db.json",data)
+  }
+
+});
 }
