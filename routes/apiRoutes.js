@@ -41,6 +41,14 @@ app.put("/api/notes/:id",function(req,result){
       var data = JSON.stringify(req.body);
       fs.writeFileSync("../Develop/db/db.json",data)
   }
+  app.delete("api/notes/:id",function(req, result){
+    var chosen = req.params.id;
+
+    console.log(chosen);
+    if(chosen === result[i].id){
+      result.splice(i,1);
+    }
+  })
 
 });
 }

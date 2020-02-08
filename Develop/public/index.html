@@ -19,7 +19,7 @@
       <hr>
   <!-- // Links to open Route Web pages     -->
       <div class="text-center">
-        <a href="/index"><button class="btn btn-lg btn-primary">Write Notes</button></a>
+        <!-- <a href="/index"><button class="btn btn-lg btn-primary">Write Notes</button></a> -->
         <a href="/notes"><button class="btn btn-lg btn-danger"> View Notes</button></a>
       </div>
   <!-- //Buttons to open new note, save note -->
@@ -113,7 +113,10 @@
       };
       //Function to update a note
     var updateNote = function(){
-    
+      var editnote={
+        title : req.body.title,
+        text :req.body.text
+      }
     }
           
           

@@ -19,7 +19,7 @@
     <!-- // Links to open Route Web pages     -->
       <div class="text-center">
         <a href="/index"><button class="btn btn-lg btn-primary">Write Notes</button></a>
-        <a href="/notes"><button class="btn btn-lg btn-danger"> View Notes</button></a>
+        <!-- <a href="/notes"><button class="btn btn-lg btn-danger"> View Notes</button></a> -->
       </div>
 
       <!-- //List to show notes, delete a note,update a note -->
@@ -69,7 +69,6 @@
             for (var i = 0; i < data.length; i++) {
           
               var listItem = $("<li class='list-group-item mt-4'>");
-
                     listItem.append(
                       $("<h2>").text("Note #" + (i + 1)),
                       $( "<i class='fas fa-trash-alt float-right text-danger' style ='font-size:36px;'>"),
@@ -84,7 +83,7 @@
 //   $("$deleteNote").on("click", function(event) {
     
 
-//      $.delete("/api/characters/:id", function(req, result) {
+//      $.delete("/api/notes/:id", function(req, result) {
 //   var id = req.params.id;
       
 //   console.log(id);
@@ -97,6 +96,18 @@
 //   }
 
 // });
+// Function to update data
+// $("updateNote").on("click",function(event){
+//   $.put("/api/notes/:id",function(req, result){
+//     var id = req.params.id;
+//     var updatedNote= {
+//       title: req.body.title,
+//       text: req.body.text
+//     }
+//     result.push(updatedNote);
+
+//   })
+// })
    
 // });
         $noteList.on("click", getsData);
